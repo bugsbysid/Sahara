@@ -39,11 +39,18 @@ export default function HomePage() {
         <main className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow p-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Welcome to Your Home
+              Welcome to Sahara
             </h2>
             <p className="text-gray-600 mb-6">
-              You're successfully logged in! This is your home page where you can build
-              your application features.
+              {user?.role === 'citizen' 
+                ? 'Report dog bite incidents and track your treatment progress.'
+                : user?.role === 'hospital'
+                ? 'Manage assigned incidents and patient records.'
+                : user?.role === 'animal_control'
+                ? 'Monitor incidents in your jurisdiction and coordinate interventions.'
+                : user?.role === 'ngo'
+                ? 'Support rescue operations and coordinate with hospitals.'
+                : 'View system-wide analytics and manage the platform.'}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
               <div className="bg-gray-50 rounded-lg p-6">
@@ -56,11 +63,34 @@ export default function HomePage() {
                     <strong>Email:</strong> {user?.email}
                   </p>
                   <p className="text-gray-600">
+                    <strong>Role:</strong> <span className="capitalize">{user?.role.replace('_', ' ')}</span>
+                  </p>
+                  {user?.organization && (
+                    <p className="text-gray-600">
+                      <strong>Organization:</strong> {user.organization}
+                    </p>
+                  )}
+                  {user?.jurisdiction && (
+                    <p className="text-gray-600">
+                      <strong>Jurisdiction:</strong> {user.jurisdiction}
+                    </p>
+                  )}
+                  <p className="text-gray-600">
                     <strong>Status:</strong>{' '}
                     {user?.isEmailVerified ? (
-                      <span className="text-green-600">Verified</span>
+                      <span className="text-green-600">Email Verified</span>
                     ) : (
-                      <span className="text-yellow-600">Not Verified</span>
+                      <span className="text-yellow-600">Email Not Verified</span>
+                    )}
+                    {user?.role !== 'citizen' && (
+                      <>
+                        {' • '}
+                        {user?.isVerified ? (
+                          <span className="text-green-600">Account Verified</span>
+                        ) : (
+                          <span className="text-yellow-600">Pending Verification</span>
+                        )}
+                      </>
                     )}
                   </p>
                 </div>
@@ -68,14 +98,23 @@ export default function HomePage() {
               <div className="bg-blue-50 rounded-lg p-6">
                 <h3 className="font-semibold text-gray-900 mb-4">Quick Actions</h3>
                 <div className="space-y-3">
-                  <Link href="/profile">
+                  {user?.role === 'citizen' && (
+                    <Link href="/report">
+                      <Button variant="outline" className="w-full">
+                        🚨 Report Dog Bite Incident
+                      </Button>
+                    </Link>
+                  )}
+                  <Link href="/incidents">
                     <Button variant="outline" className="w-full">
-                      Edit Profile
+                      📋 {user?.role === 'citizen' ? 'View My Incidents' : 'View Incidents'}
                     </Button>
                   </Link>
-                  <Button variant="outline" className="w-full" disabled>
-                    Change Password
-                  </Button>
+                  <Link href="/profile">
+                    <Button variant="outline" className="w-full">
+                      👤 Edit Profile
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>

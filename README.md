@@ -1,5 +1,7 @@
 # Sahara - Stray Dog Bite Reporting & Emergency Response System
 
+> **New to this project?** Start with [START_HERE.md](START_HERE.md) for a guided introduction!
+
 A unified platform addressing India's stray dog crisis by streamlining dog bite reporting, emergency response coordination, and rabies prevention.
 
 ## 🚨 Problem Statement
@@ -54,54 +56,71 @@ Sahara provides a centralized platform that:
 
 ## 🚀 Quick Start
 
-### 1. Install Dependencies
+> **Ready to Deploy?** See [READY_TO_DEPLOY.md](READY_TO_DEPLOY.md) for production deployment!
+
+### Prerequisites
+- Node.js 18+ and npm
+- MongoDB (local or Atlas account)
+
+### 1. Clone and Install
 
 ```bash
-# Backend
-cd backend
-npm install
+git clone <repository-url>
+cd Sahara
 
-# Frontend
-cd ../frontend
-npm install
+# Install all dependencies
+cd backend && npm install
+cd ../frontend && npm install
 ```
 
 ### 2. Configure Environment
 
-**Backend** - Setup environment variables:
+**Backend** - Create `.env` file:
 
 ```bash
 cd backend
-npm run setup:env
-# Then edit the created .env file with your values
+cp env.example .env
 ```
 
-**Required environment variables:**
+Edit `backend/.env` with your values:
 ```env
-MONGODB_URI=your-mongodb-connection-string
-JWT_SECRET=your-secret-key-min-32-characters  # Generate: openssl rand -base64 32
+MONGODB_URI=mongodb://localhost:27017/sahara-db
+JWT_SECRET=<generate-with-openssl-rand-base64-32>
 FRONTEND_URL=http://localhost:3000
-PORT=5000
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASS=your-gmail-app-password
 ```
 
-**Frontend** - Create `frontend/.env.local`:
-```env
-NEXT_PUBLIC_API_URL=http://localhost:5000
-```
-
-### 3. Start Development
+**Frontend** - Create `.env.local` file:
 
 ```bash
-# Terminal 1 - Backend
-cd backend
+cd frontend
+cp .env.local.example .env.local
+```
+
+The default values should work for local development.
+
+### 3. Start Development Servers
+
+```bash
+# Terminal 1 - Backend (from Sahara/backend)
 npm run dev
 
-# Terminal 2 - Frontend
-cd frontend
+# Terminal 2 - Frontend (from Sahara/frontend)
 npm run dev
 ```
 
 Visit http://localhost:3000
+
+### 4. First Steps
+1. Sign up with a new account (choose your role)
+2. Login with your credentials
+3. Explore the dashboard
+4. Report a test incident (GPS location required)
+
+For detailed setup instructions, see [SETUP_GUIDE.md](SETUP_GUIDE.md)
+
+For deployment instructions, see [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)
 
 ## 📁 Project Structure
 
@@ -168,8 +187,27 @@ Visit http://localhost:3000
 ## 📚 Documentation
 
 - **[Setup Guide](SETUP_GUIDE.md)** - Complete setup instructions
+- **[Deployment Guide](DEPLOYMENT_GUIDE.md)** - Production deployment steps
+- **[Deployment Checklist](PRODUCTION_DEPLOYMENT_CHECKLIST.md)** - Step-by-step deployment checklist
+- **[Production Ready](PRODUCTION_READY.md)** - Production readiness verification
 - **[Project Structure](PROJECT_STRUCTURE.md)** - Architecture overview
-- **[Auth Setup](docs/AUTH_SETUP.md)** - Authentication configuration
+- **[Current Status](CURRENT_STATUS.md)** - Development progress
+- **[Problem Statement](docs/PROBLEM_STATEMENT.md)** - Detailed problem analysis
+
+## 🛠️ Development Scripts
+
+**Backend:**
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build for production
+- `npm start` - Start production server
+
+**Frontend:**
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm start` - Start production server
+
+**Quick Start:**
+- `./start-dev.sh` (Linux/Mac) or `start-dev.bat` (Windows) - Start both servers
 
 ## 🤝 Contributing
 

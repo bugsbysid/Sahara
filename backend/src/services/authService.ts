@@ -126,23 +126,6 @@ export const loginUser = async (data: LoginData) => {
   };
 };
 
-  // Generate token
-  const token = generateToken({
-    userId: user._id.toString(),
-    email: user.email,
-  });
-
-  return {
-    user: {
-      id: user._id.toString(),
-      name: user.name,
-      email: user.email,
-      isEmailVerified: user.isEmailVerified,
-    },
-    token,
-  };
-};
-
 export const forgotPassword = async (email: string) => {
   // Trim and sanitize email
   const sanitizedEmail = email.trim().toLowerCase();

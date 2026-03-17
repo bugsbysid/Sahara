@@ -31,7 +31,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-gray-900">YourApp</h1>
+              <h1 className="text-2xl font-bold text-blue-600">Sahara</h1>
             </div>
             <div className="flex items-center gap-4">
               <Link href="/login">
@@ -49,16 +49,24 @@ export default function LandingPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
           <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6">
-            Welcome to Your
-            <span className="text-blue-600"> Amazing App</span>
+            Addressing India's
+            <span className="text-blue-600"> Stray Dog Crisis</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Build something incredible with our platform. Get started today and experience
-            the power of modern web applications.
+          <p className="text-xl text-gray-600 mb-4 max-w-3xl mx-auto">
+            A unified platform for dog bite reporting, emergency response coordination, 
+            and rabies prevention
           </p>
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 max-w-2xl mx-auto mb-8">
+            <p className="text-red-800 font-semibold">
+              🚨 26.7 lakh dog bite cases in 2025
+            </p>
+            <p className="text-red-700 text-sm mt-1">
+              Preventable rabies deaths due to fragmented reporting and poor coordination
+            </p>
+          </div>
           <div className="flex gap-4 justify-center">
             <Link href="/signup">
-              <Button className="px-8 py-3 text-lg">Get Started Free</Button>
+              <Button className="px-8 py-3 text-lg">Report an Incident</Button>
             </Link>
             <Link href="/login">
               <Button variant="outline" className="px-8 py-3 text-lg">
@@ -71,24 +79,24 @@ export default function LandingPage() {
         {/* Features Section */}
         <div className="mt-32 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <div className="text-blue-600 text-4xl mb-4">🚀</div>
-            <h3 className="text-xl font-semibold mb-2">Fast & Reliable</h3>
+            <div className="text-blue-600 text-4xl mb-4">🆘</div>
+            <h3 className="text-xl font-semibold mb-2">Instant Reporting</h3>
             <p className="text-gray-600">
-              Built with modern technologies for optimal performance and reliability.
+              Report dog bite incidents immediately with GPS location and photos.
             </p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <div className="text-blue-600 text-4xl mb-4">🔒</div>
-            <h3 className="text-xl font-semibold mb-2">Secure</h3>
+            <div className="text-blue-600 text-4xl mb-4">🏥</div>
+            <h3 className="text-xl font-semibold mb-2">Find Hospitals</h3>
             <p className="text-gray-600">
-              Your data is protected with industry-standard security practices.
+              Automatic discovery of nearby hospitals with anti-rabies vaccines.
             </p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <div className="text-blue-600 text-4xl mb-4">✨</div>
-            <h3 className="text-xl font-semibold mb-2">Easy to Use</h3>
+            <div className="text-blue-600 text-4xl mb-4">📊</div>
+            <h3 className="text-xl font-semibold mb-2">Data-Driven Action</h3>
             <p className="text-gray-600">
-              Intuitive interface designed for the best user experience.
+              Identify hotspots and patterns for targeted interventions.
             </p>
           </div>
         </div>
@@ -98,7 +106,7 @@ export default function LandingPage() {
       <footer className="bg-white border-t mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <p className="text-center text-gray-600">
-            © 2024 YourApp. All rights reserved.
+            © 2025 Sahara. Built with ❤️ to address India's stray dog crisis.
           </p>
         </div>
       </footer>
