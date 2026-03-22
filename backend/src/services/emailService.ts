@@ -80,15 +80,23 @@ if (hasEmailConfig && transporter && process.env.NODE_ENV !== 'production') {
     logger.debug('Email verification timeout - this is normal if SMTP connections are restricted');
   }, 5000);
 
-  transporter.verify((error: Error | null) => {
+  // Wrap verify in try-catch to handle any synchronous errors
+  try {
+    transporter.verify((error: Error | null) => {
+      clearTimeout(verifyTimeout);
+      if (error) {
+        logger.warn('Email service connection verification failed:', error.message);
+        logger.debug('This may be normal if SMTP connections are restricted. Email sending will still be attempted.');
+      } else {
+        logger.info('Email service connection verified successfully');
+      }
+    });
+  } catch (err) {
     clearTimeout(verifyTimeout);
-    if (error) {
-      logger.warn('Email service connection verification failed:', error.message);
-      logger.debug('This may be normal if SMTP connections are restricted. Email sending will still be attempted.');
-    } else {
-      logger.info('Email service connection verified successfully');
-    }
-  });
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+    logger.warn('Email service connection verification failed:', errorMessage);
+    logger.debug('This may be normal if SMTP connections are restricted. Email sending will still be attempted.');
+  }
 } else if (hasEmailConfig && transporter && process.env.NODE_ENV === 'production') {
   logger.info('Email service configured (verification skipped in production)');
 }

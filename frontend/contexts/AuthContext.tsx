@@ -33,7 +33,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const cookies = document.cookie.split(';');
         const tokenCookie = cookies.find(c => c.trim().startsWith('token='));
         if (tokenCookie) {
-          token = decodeURIComponent(tokenCookie.split('=')[1].trim());
+          const parts = tokenCookie.split('=');
+          if (parts.length >= 2) {
+            // Join all parts after the first '=' in case token contains '='
+            token = decodeURIComponent(parts.slice(1).join('=').trim());
+          }
         }
       }
       
@@ -66,7 +70,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const cookies = document.cookie.split(';');
         const tokenCookie = cookies.find(c => c.trim().startsWith('token='));
         if (tokenCookie) {
-          token = tokenCookie.split('=')[1];
+          const parts = tokenCookie.split('=');
+          if (parts.length >= 2) {
+            // Join all parts after the first '=' in case token contains '='
+            token = parts.slice(1).join('=');
+          }
         }
       }
       

@@ -139,12 +139,20 @@ export default function ReportIncidentPage() {
     setIsLoading(true);
 
     try {
+      const parsedAge = formData.victimAge ? parseInt(formData.victimAge) : undefined;
+      
+      // Validate parsed age
+      if (parsedAge !== undefined && (isNaN(parsedAge) || parsedAge < 0 || parsedAge > 150)) {
+        showToast('Please enter a valid age between 0 and 150', 'error');
+        return;
+      }
+
       const incidentData: CreateIncidentData = {
         incidentDate: new Date(formData.incidentDate),
         location: formData.location,
         description: formData.description,
         severity: formData.severity,
-        victimAge: formData.victimAge ? parseInt(formData.victimAge) : undefined,
+        victimAge: parsedAge,
         victimGender: formData.victimGender || undefined,
         dogDescription: formData.dogDescription || undefined,
         dogColor: formData.dogColor || undefined,

@@ -114,14 +114,30 @@ router.get('/', async (req: Request, res: Response) => {
     }
 
     // Parse filters
+    const page = req.query.page ? parseInt(req.query.page as string) : 1;
+    const limit = req.query.limit ? parseInt(req.query.limit as string) : 20;
+
+    // Validate pagination parameters
+    if (isNaN(page) || page < 1) {
+      return res.status(400).json({
+        error: { message: 'Invalid page number' },
+      });
+    }
+
+    if (isNaN(limit) || limit < 1 || limit > 100) {
+      return res.status(400).json({
+        error: { message: 'Invalid limit value (must be between 1 and 100)' },
+      });
+    }
+
     const filters = {
       status: req.query.status as string,
       severity: req.query.severity as string,
       city: req.query.city as string,
       startDate: req.query.startDate ? new Date(req.query.startDate as string) : undefined,
       endDate: req.query.endDate ? new Date(req.query.endDate as string) : undefined,
-      page: req.query.page ? parseInt(req.query.page as string) : 1,
-      limit: req.query.limit ? parseInt(req.query.limit as string) : 20,
+      page,
+      limit,
     };
 
     const result = await getIncidents(authReq.user.userId, user.role, filters);
@@ -191,9 +207,30 @@ router.get('/nearby-hospitals', async (req: Request, res: Response) => {
       });
     }
 
-    const coordinates: [number, number] = [parseFloat(lng as string), parseFloat(lat as string)];
+    const longitude = parseFloat(lng as string);
+    const latitude = parseFloat(lat as string);
     const maxDistanceKm = maxDistance ? parseFloat(maxDistance as string) : 10;
 
+    // Validate parsed numbers
+    if (isNaN(longitude) || isNaN(latitude)) {
+      return res.status(400).json({
+        error: { message: 'Invalid longitude or latitude values' },
+      });
+    }
+
+    if (longitude < -180 || longitude > 180 || latitude < -90 || latitude > 90) {
+      return res.status(400).json({
+        error: { message: 'Longitude must be between -180 and 180, latitude between -90 and 90' },
+      });
+    }
+
+    if (isNaN(maxDistanceKm) || maxDistanceKm <= 0) {
+      return res.status(400).json({
+        error: { message: 'Invalid maxDistance value' },
+      });
+    }
+
+    const coordinates: [number, number] = [longitude, latitude];
     const hospitals = await findNearbyHospitals(coordinates, maxDistanceKm);
 
     return res.status(200).json({
