@@ -6,7 +6,7 @@ export type SeverityLevel = 'minor' | 'moderate' | 'severe' | 'critical';
 export interface IIncident extends Document {
   reporterId: mongoose.Types.ObjectId;
   reporterName: string;
-  reporterPhone: string;
+  reporterPhone?: string; // Optional since users might not have phone numbers
   reporterEmail: string;
   
   // Incident details
@@ -87,8 +87,8 @@ const IncidentSchema = new Schema<IIncident>(
     },
     reporterPhone: {
       type: String,
-      required: true,
       trim: true,
+      default: '', // Make it optional with empty string default
     },
     reporterEmail: {
       type: String,

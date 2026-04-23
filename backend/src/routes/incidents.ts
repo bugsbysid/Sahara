@@ -83,8 +83,12 @@ router.post('/', async (req: Request, res: Response) => {
     });
   } catch (error: unknown) {
     const err = error as Error;
+    console.error('Error in POST /api/incidents:', err);
     return res.status(500).json({
-      error: { message: err.message || 'Failed to create incident' },
+      error: { 
+        message: err.message || 'Failed to create incident',
+        details: process.env.NODE_ENV === 'development' ? err.stack : undefined
+      },
     });
   }
 });

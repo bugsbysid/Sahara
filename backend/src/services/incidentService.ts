@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 export interface CreateIncidentData {
   reporterId: string;
   reporterName: string;
-  reporterPhone: string;
+  reporterPhone?: string; // Optional
   reporterEmail: string;
   incidentDate: Date;
   location: {
@@ -34,9 +34,13 @@ export interface CreateIncidentData {
  */
 export const createIncident = async (data: CreateIncidentData) => {
   try {
-    // Create incident
+    // Create incident with proper GeoJSON format
     const incident = await Incident.create({
       ...data,
+      location: {
+        ...data.location,
+        type: 'Point', // Ensure GeoJSON type is set
+      },
       status: 'reported',
       reportedAt: new Date(),
       firstAidGiven: false,
@@ -82,7 +86,12 @@ export const createIncident = async (data: CreateIncidentData) => {
     };
   } catch (error) {
     logger.error('Error creating incident:', error);
-    throw new Error('Failed to create incident report');
+    // Log more details for debugging
+    if (error instanceof Error) {
+      logger.error('Error message:', error.message);
+      logger.error('Error stack:', error.stack);
+    }
+    throw error; // Throw the original error to preserve the message
   }
 };
 
